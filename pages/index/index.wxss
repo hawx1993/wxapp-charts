@@ -1,0 +1,10 @@
+canvas{
+  display: inline-block;
+}
+.chartContainer{
+  width: 400px;
+  height: 450px;
+  margin-top: 100px;
+  margin-left: 0;
+  color: #000;
+}

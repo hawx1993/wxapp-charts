@@ -1,0 +1,9 @@
+
+<canvas canvas-id="canvas1" style="width:200px;height:200px;">
+
+</canvas>
+<canvas canvas-id="canvas2" style="width:200px;height:200px;margin-top:50px;">
+
+</canvas>
+<canvas canvas-id="chartContainer" class="chartContainer" >
+</canvas>

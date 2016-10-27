@@ -1,0 +1,12 @@
+{
+  "pages":[
+    "pages/index/index"
+  ],
+  "window":{
+    "backgroundTextStyle": "white",
+    "navigationBarBackgroundColor": "#48C23D",
+    "navigationBarTitleText": "微信小程序charts组件",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#fff"
+  }
+}
