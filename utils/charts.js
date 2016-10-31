@@ -212,7 +212,7 @@ var Charts = function (params) {
         drawChartWithAnimation();
 
         wx.drawCanvas({
-            canvasId: 'chartContainer',
+            canvasId: canvasId,
             actions: cxt.getActions()
         });
     }
