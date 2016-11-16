@@ -8,8 +8,7 @@
 var Charts = function (params) {
     var type = params.type,
         data = params.data,
-        colors = params.colors,
-        txt = params.txt || '',
+        colors = params.colors || [''],
         canvasId = params.canvasId,
         point = params.point || '',
         radius = params.radius,
@@ -38,13 +37,13 @@ var Charts = function (params) {
             context.fill();
             context.closePath();
         }
+        this.data = data;
 
         wx.drawCanvas({
             canvasId: canvasId,
             actions: context.getActions()
         })
     }else if(type == "ring"){
-
         for (var a = 0; a < data.length; a++) {
             context.beginPath();
             //起点弧度
@@ -54,13 +53,22 @@ var Charts = function (params) {
                     startRing += data[b] / total * 2 * Math.PI;
                 }
             }
-
             context.arc(point.x, point.y, radius, startRing, data[a] / total * 2 * Math.PI);
             context.setLineWidth(radius/3);
             context.setStrokeStyle(colors[a]);
+            // context.setGlobalAlpha(0.9);
+            context.stroke();
+
+            context.closePath();
+            context.beginPath();
+
+            context.arc(point.x, point.y, radius/1.5, startRing, data[a] / total * 3 * Math.PI);
+            context.setLineWidth(radius/16);
+            context.setStrokeStyle('#f6f6f6');
             context.stroke();
             context.closePath();
         }
+        this.data = data;
 
         wx.drawCanvas({
             canvasId: canvasId,
@@ -71,7 +79,8 @@ var Charts = function (params) {
     else if(type == 'bar'){
         var arr = params.data,
             showYAxis = params.showYAxis,
-            colors = params.colors || "#fb999a",
+            bgColors = params.bgColors || "#fb999a",
+            color = params.color,
             cHeight = params.cHeight || 300,//表格高度
             cWidth = params.cWidth || 500,//表格宽度
             bWidth = params.bWidth || 20,//每根柱状图宽度
@@ -96,7 +105,7 @@ var Charts = function (params) {
         function chartSet() {
 
             // chart properties
-            cMargin = -50;//图表与canvas边界距离
+            cMargin = -60;//图表与canvas边界距离
             cSpace = 50;
             if(showYAxis){
                 cMargin = 10;
@@ -136,7 +145,7 @@ var Charts = function (params) {
             cxt.beginPath();
             cxt.moveTo(x,y);
             cxt.lineTo(X,Y);
-            cxt.setStrokeStyle("#cccccc");//x Axis and y Axis border color
+            cxt.setStrokeStyle("#dddddd");//x Axis and y Axis border color
             cxt.closePath();
             cxt.stroke();
         }
@@ -161,7 +170,10 @@ var Charts = function (params) {
                 var markerXPos = (cMarginSpace + bMargin)
                     + (b * (bWidth + bMargin)) + (bWidth/2) -10;
                 var markerYPos = cMarginHeight + 20;//x轴数值与x轴距离
+                cxt.setFontSize(12);
+                cxt.setFillStyle(color);
                 cxt.fillText(name, markerXPos, markerYPos);//x轴底部文字
+
             }
             cxt.save();
             // Add Y Axis title
@@ -178,7 +190,6 @@ var Charts = function (params) {
             if (flag < t100) {
                 flag = flag + 1;
                 setTimeout(drawChartWithAnimation, speed);
-
             }
             for (var i = 0; i < totalBars; i++) {
                 var arrVal = arr[i].split(",");
@@ -187,22 +198,18 @@ var Charts = function (params) {
                 var bX = cMarginSpace + (i * (bWidth + bMargin)) + bMargin;
                 var bY = cMarginHeight - bHt - 2;//cMarginHeight=> 380
                 var textY = cMarginHeight - bHt-10;
-                console.log( bHt );
                 drawRectangle(bX, bY, bWidth, bHt);
                 // draw(bX,bY,bWidth,maxValue-bHt);
                 cxt.setFillStyle("#000000");//singer bar number color
-                cxt.fillText(bVal,bX+4,textY);//singer bar number
-
+                cxt.fillText(bVal,bX,textY);//singer bar number
             }
-
             // Loop through the total bars and draw
-
         }
         function drawRectangle(x, y, w, h) {
             cxt.beginPath();
             cxt.rect(x, y, w, h);
             cxt.setStrokeStyle("#ffffff");//single bar border color
-            cxt.setFillStyle(colors);//single bar bgcolor
+            cxt.setFillStyle(bgColors);//single bar bgcolor
             cxt.stroke();
             cxt.fill();
             cxt.closePath();
@@ -215,6 +222,8 @@ var Charts = function (params) {
             canvasId: canvasId,
             actions: cxt.getActions()
         });
+        this.arr = arr;
+        this.cWidth = cWidth;
     }
 };
 module.exports = Charts;
