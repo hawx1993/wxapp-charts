@@ -2,6 +2,10 @@
 
 微信小程序图表charts组件
 
+<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/gWs9P5H4YpntyAR6x1qG5EkX/hawx1993/wxapp-charts'>
+  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/gWs9P5H4YpntyAR6x1qG5EkX/hawx1993/wxapp-charts.svg' />
+</a>
+
 ### Usage
 
 ```JavaScript
